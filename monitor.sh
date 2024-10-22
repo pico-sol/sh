@@ -1,0 +1,1 @@
+solana-validator --ledger /mnt/ledger monitor

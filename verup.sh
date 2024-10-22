@@ -1,0 +1,1 @@
+solana-install init 1.18.25 && solana-validator --ledger /mnt/ledger exit -m --max-delinquent-stake 10
