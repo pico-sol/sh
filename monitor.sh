@@ -1,1 +1,1 @@
-solana-validator --ledger /mnt/ledger monitor
+agave-validator --ledger /mnt/ledger monitor
