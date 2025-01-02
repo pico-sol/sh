@@ -1,1 +1,1 @@
-solana-install init 1.18.25 && solana-validator --ledger /mnt/ledger exit -m --max-delinquent-stake 10
+agave-install init 2.0.19-jito && agave-validator --ledger /mnt/ledger exit -m --max-delinquent-stake 10
