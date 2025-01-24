@@ -1,0 +1,1 @@
+tail -f ~/solana-validator.log
