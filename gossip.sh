@@ -1,0 +1,1 @@
+solana gossip | grep D3htsc6iRQJLqCNWcC2xcZgUuvcd1JT8zoYNqraNcTQz
