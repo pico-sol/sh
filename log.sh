@@ -1,1 +1,1 @@
-tail -f ~/solana-validator.log
+tail -f /mnt/ledger/log/solana-validator.log
