@@ -1,1 +1,1 @@
-tail -f /mnt/solv/solana-validator.log
+tail -f /home/solv/solana-validator.log
