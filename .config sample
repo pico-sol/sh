@@ -1,0 +1,3 @@
+#ファイル名を.configに修正してください
+REMOTE_IP=***.***.***.***
+SNAPSHOT_PATH=/mnt/ledger

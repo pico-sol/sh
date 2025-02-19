@@ -1,5 +1,5 @@
 # Solana Validator Shell Scripts
 
-active-to-inactive.sh: change ***.***.***.*** to IP address of your inactive node
-
-c and m are shortcut symlink for catchup and monitor like 'bash c' or 'bash m'
+.config sampleファイルのファイル名を.configに変更してください
+REMOTE_IPをスイッチする先のノードのIPアドレスに変更してください
+SNAPSHOT_PATHをスナップショット保存先フォルダに変更してください
