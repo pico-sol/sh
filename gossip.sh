@@ -1,1 +1,4 @@
-solana gossip | grep D3htsc6iRQJLqCNWcC2xcZgUuvcd1JT8zoYNqraNcTQz
+# .configファイルの読み込み
+source /home/solv/sh/.config
+
+solana gossip | grep "$VALIDATOR_ID"
