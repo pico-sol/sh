@@ -11,7 +11,7 @@ case "$CLIENT" in
     sudo systemctl start firedancer
     ;;
   "agave"|"jito"|"paladin")
-    sudo systemctl disable firedancer
+    sudo systemctl disable firedancer 2>/dev/null || true
     sudo systemctl enable solv
     sudo systemctl start solv
     ;;

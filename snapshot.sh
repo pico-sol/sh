@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # .configファイルの読み込み
 source /home/solv/sh/.config
 

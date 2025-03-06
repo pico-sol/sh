@@ -1,7 +1,5 @@
 #ファイル名を.configに修正してください
-# switch.sh  REMOTE_CLIENT=agave, jito, paladin, or firedancer
-REMOTE_IP=***.***.***.***
-REMOTE_CLIENT=firedancer
+
 # snapshot.sh
 SNAPSHOT_PATH=/mnt/ledger
 # gossip.sh
@@ -10,3 +8,6 @@ VALIDATOR_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 CLUSTER=testnet
 # start.sh, stop.sh   agave, jito, paladin, or firedancer
 CLIENT=firedancer
+# switch.sh  REMOTE_CLIENT=agave, jito, paladin, or firedancer
+REMOTE_IP=***.***.***.***
+REMOTE_CLIENT=firedancer
