@@ -38,10 +38,20 @@ echo "towerファイルの転送が完了しました。"
 # サブノード：activeへの切替（SSHでリモート実行）
 # -----------------------------
 echo "サブノードをactiveモードに切替中…"
-ssh solv@"$REMOTE_IP" << EOF
-  set -e
-  agave-validator -l /mnt/ledger set-identity --require-tower /home/solv/${CLUSTER}-validator-keypair.json
-  ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
-EOF
+case "$REMOTE_CLIENT" in
+  "firedancer")
+    ssh solv@"$REMOTE_IP" << EOF
+      fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
+      ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
+    EOF
+    ;;
+  "agave"|"jito"|"paladin")
+    ssh solv@"$REMOTE_IP" << EOF
+      set -e
+      agave-validator -l /mnt/ledger set-identity --require-tower /home/solv/${CLUSTER}-validator-keypair.json
+      ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
+    EOF
+    ;;
+esac
 
 echo "バリデータのスイッチが完了しました。"
