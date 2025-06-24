@@ -29,7 +29,6 @@ echo "towerファイルの転送が完了しました。"
 echo "サブノードをactiveモードに切替中…"
 ssh solv@"$REMOTE_IP" << EOF
   set -e
-  # ここで ${CLUSTER} はローカルで展開済み
   agave-validator -l /mnt/ledger set-identity --require-tower /home/solv/${CLUSTER}-validator-keypair.json
   ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
 EOF
