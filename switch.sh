@@ -2,11 +2,26 @@
 set -e
 source /home/solv/sh/.config
 
-# CLIENTチェック
-if [[ "$CLIENT" != firedancer && "$CLIENT" != agave && "$CLIENT" != jito && "$CLIENT" != paladin ]]; then
-  echo "Error: Unknown CLIENT value: $CLIENT"
-  exit 1
-fi
+# フェイルセーフ処理
+rollback_main_active() {
+  echo "エラー発生: メインノードをactiveに戻します..."
+  case "$CLIENT" in
+    firedancer)
+      fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
+      ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
+      ;;
+    agave|jito|paladin)
+      agave-validator -l /mnt/ledger set-identity /home/solv/${CLUSTER}-validator-keypair.json
+      ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
+      ;;
+  esac
+  echo "メインノードをactiveに復旧しました。"
+}
+
+# エラー時にロールバック処理を実行
+trap rollback_main_active ERR
+
+# --- ここから通常処理 ---
 
 echo "メインノードをinactiveモードに切替中…"
 case "$CLIENT" in
@@ -29,19 +44,22 @@ echo "towerファイルの転送が完了しました。"
 echo "サブノードをactiveモードに切替中…"
 case "$REMOTE_CLIENT" in
   firedancer)
-ssh -T  solv@"$REMOTE_IP" << EOF
-  set -e
-  fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
-  ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
+    ssh -T solv@"$REMOTE_IP" <<EOF
+set -e
+fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
+ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
+cat /home/solv/identity.json | solana-keygen pubkey -
 EOF
     ;;
   agave|jito|paladin)
-ssh -T  solv@"$REMOTE_IP" << EOF
-  set -e
-  agave-validator -l /mnt/ledger set-identity --require-tower /home/solv/${CLUSTER}-validator-keypair.json
-  ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
+    ssh -T solv@"$REMOTE_IP" <<EOF
+set -e
+agave-validator -l /mnt/ledger set-identity --require-tower /home/solv/${CLUSTER}-validator-keypair.json
+ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
+cat /home/solv/identity.json | solana-keygen pubkey -
 EOF
     ;;
 esac
 
 echo "バリデータのスイッチが完了しました。"
+
