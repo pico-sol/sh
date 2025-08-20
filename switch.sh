@@ -15,7 +15,7 @@ rollback_main_active() {
       ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
       ;;
   esac
-  echo メインノード: \$(solana-keygen pubkey /home/solv/identity.json)
+  echo "メインノード: $(solana-keygen pubkey /home/solv/identity.json)"
   echo "メインノードをactiveに復旧しました。"
 }
 
@@ -61,6 +61,6 @@ echo "サブノード: \$(solana-keygen pubkey /home/solv/identity.json)"
 EOF
     ;;
 esac
-echo メインノード: \$(solana-keygen pubkey /home/solv/identity.json)
+echo "メインノード: $(solana-keygen pubkey /home/solv/identity.json)"
 echo "バリデータのスイッチが完了しました。"
 
