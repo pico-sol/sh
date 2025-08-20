@@ -29,14 +29,14 @@ echo "towerファイルの転送が完了しました。"
 echo "サブノードをactiveモードに切替中…"
 case "$REMOTE_CLIENT" in
   firedancer)
-ssh solv@"$REMOTE_IP" << EOF
+ssh -T  solv@"$REMOTE_IP" << EOF
   set -e
   fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
   ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
 EOF
     ;;
   agave|jito|paladin)
-ssh solv@"$REMOTE_IP" << EOF
+ssh -T  solv@"$REMOTE_IP" << EOF
   set -e
   agave-validator -l /mnt/ledger set-identity --require-tower /home/solv/${CLUSTER}-validator-keypair.json
   ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
