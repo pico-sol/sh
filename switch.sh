@@ -15,6 +15,7 @@ rollback_main_active() {
       ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
       ;;
   esac
+  echo "メインノード: \$(solana-keygen pubkey /home/solv/identity.json)"
   echo "メインノードをactiveに復旧しました。"
 }
 
@@ -48,7 +49,7 @@ case "$REMOTE_CLIENT" in
 set -e
 fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
 ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
-cat /home/solv/identity.json | solana-keygen pubkey -
+echo "サブノード: \$(solana-keygen pubkey /home/solv/identity.json)"
 EOF
     ;;
   agave|jito|paladin)
@@ -56,10 +57,10 @@ EOF
 set -e
 agave-validator -l /mnt/ledger set-identity --require-tower /home/solv/${CLUSTER}-validator-keypair.json
 ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
-cat /home/solv/identity.json | solana-keygen pubkey -
+echo "サブノード: \$(solana-keygen pubkey /home/solv/identity.json)"
 EOF
     ;;
 esac
-
+echo "メインノード: \$(solana-keygen pubkey /home/solv/identity.json)"
 echo "バリデータのスイッチが完了しました。"
 
