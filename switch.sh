@@ -35,12 +35,6 @@ case "$REMOTE_CLIENT" in
       ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
     EOF
     ;;
-
-ssh solv@"$REMOTE_IP" <<EOF
-  set -e
-  fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
-  ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
-EOF
   agave|jito|paladin)
     ssh solv@"$REMOTE_IP" << EOF
       set -e
