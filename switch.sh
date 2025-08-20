@@ -32,7 +32,7 @@ if [[ "$CURRENT_ID" != "$VALIDATOR_ID" ]]; then
   exit 1
 fi
 
-echo "メインノードをinactiveモードに切替中…"
+echo "このノードをinactiveモードに切替中…"
 case "$CLIENT" in
   firedancer)
     fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/unstaked-identity.json
@@ -45,19 +45,19 @@ case "$CLIENT" in
     ;;
 esac
 
-echo "towerファイルをサブノードへ転送中…"
+echo "towerファイルをリモートノードへ転送中…"
 TOWER_FILE="/mnt/ledger/tower-1_9-$(solana-keygen pubkey /home/solv/$CLUSTER-validator-keypair.json).bin"
 scp "$TOWER_FILE" solv@"$REMOTE_IP":/mnt/ledger
 echo "towerファイルの転送が完了しました。"
 
-echo "サブノードをactiveモードに切替中…"
+echo "リモートノードをactiveモードに切替中…"
 case "$REMOTE_CLIENT" in
   firedancer)
     ssh -T solv@"$REMOTE_IP" <<EOF
 set -e
 fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
 ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
-echo "サブノード: \$(solana-keygen pubkey /home/solv/identity.json)"
+echo "リモートノード: \$(solana-keygen pubkey /home/solv/identity.json)"
 EOF
     ;;
   agave|jito|paladin)
@@ -65,10 +65,10 @@ EOF
 set -e
 agave-validator -l /mnt/ledger set-identity --require-tower /home/solv/${CLUSTER}-validator-keypair.json
 ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
-echo "サブノード: \$(solana-keygen pubkey /home/solv/identity.json)"
+echo "リモートノード: \$(solana-keygen pubkey /home/solv/identity.json)"
 EOF
     ;;
 esac
-echo "メインノード: $(solana-keygen pubkey /home/solv/identity.json)"
+echo "このノード: $(solana-keygen pubkey /home/solv/identity.json)"
 echo "バリデータのスイッチが完了しました。"
 
