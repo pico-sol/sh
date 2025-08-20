@@ -23,6 +23,14 @@ rollback_main_active() {
 trap rollback_main_active ERR
 
 # --- ここから通常処理 ---
+# identity.json から現在のpubkeyを取得
+CURRENT_ID=$(solana-keygen pubkey /home/solv/identity.json)
+
+# VALIDATOR_IDと突き合わせて確認
+if [[ "$CURRENT_ID" != "$VALIDATOR_ID" ]]; then
+  echo "エラー: identity.jsonのpubkey ($CURRENT_ID) が VALIDATOR_ID ($VALIDATOR_ID) と一致しません"
+  exit 1
+fi
 
 echo "メインノードをinactiveモードに切替中…"
 case "$CLIENT" in
