@@ -7,7 +7,7 @@ rollback_main_active() {
   echo "エラー発生: メインノードをactiveに戻します..."
   case "$CLIENT" in
     firedancer)
-      fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json
+      fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/${CLUSTER}-validator-keypair.json --force
       ln -sf /home/solv/${CLUSTER}-validator-keypair.json /home/solv/identity.json
       ;;
     agave|jito|paladin)
@@ -35,7 +35,7 @@ fi
 echo "このノードをinactiveモードに切替中…"
 case "$CLIENT" in
   firedancer)
-    fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/unstaked-identity.json
+    fdctl set-identity --config /home/solv/firedancer/config.toml /home/solv/unstaked-identity.json --force
     ln -sf /home/solv/unstaked-identity.json /home/solv/identity.json
     ;;
   agave|jito|paladin)
