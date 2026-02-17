@@ -18,3 +18,5 @@ jq --arg p "${release_dir}/${out}" '.libpath = $p' "$config" > "${config}.tmp" \
   && mv "${config}.tmp" "$config"
 
 echo "Updated libpath -> $(jq -r .libpath "$config")"
+
+agave-validator --ledger /mnt/ledger plugin reload bot-plugin  /home/solv/jito-solana/bot/config.json
